@@ -36,8 +36,6 @@ def create_repository(args, project_path):
     header["Authorization"] = tokenstr
     header["Accept"] = "application/vnd.github.v3+json"
     json_body = json.dumps(post)
-    print(header)
-    print(json.dumps(post))
 
     # request to create repository
     r = requests.post(URL, headers=header, data=json_body)
