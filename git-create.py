@@ -12,8 +12,15 @@ def create_repository(args):
     # Build json object to be POSTed to github
     post = {}
     post["name"] = args.name
+    # description argument
     if args.description:
         post["description"] = args.description
+    # gitignore template
+    if args.gitignore:
+        post["gitignore_template"] = args.gitignore
+    # license template
+    if args.license:
+        post["license_template"] = args.license
 
     # get authorization token
     env = open(".env", "r")
@@ -49,7 +56,7 @@ def create_repository(args):
 # team_id : integer, only in organization
 # auto_init : boolean, F, True to create inital commit with empty README.md
 # gitignore_template : string, https://github.com/github/gitignore for examples
-# license_template : string, https://help.github.com/en/articles/licensing-a-repository#searching-     github-by-license-type for extensions, choosealicence.com for options
+# license_template : string, https://help.github.com/en/articles/licensing-a-repository#searching-     github-by-license-type for extensions, choosealicense.com for options
 # allow_squash_merge : boolean, T
 # allow_merge_commit : boolean, T
 # allow_rebase_merge : boolean, T
@@ -58,11 +65,13 @@ def create_repository(args):
 # name
 # description
 # gitignore_template
-# licence_template
+# license_template
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--name", help="name of the github repo, may not contain spaces")
+parser.add_argument("--name", help="Name of the github repo to be created, may not contain spaces")
 parser.add_argument("--description", help="description of the repo")
+parser.add_argument("--gitignore", help="Name of a gitignore template. Names available at https://github.com/github/gitignore")
+parser.add_argument("--license", help="Name of a license. Names available at https://help.github.com/en/articles/licensing-a-repository#searching-github-by-license-type. Popular ones are: gpl-2.0/3.0, mit and apache-2.0")
 args = parser.parse_args()
 
 # URL to create repo
