@@ -5,7 +5,7 @@ import json
 import requests
 
 
-def create_repository(args):
+def create_repository(args, project_path):
     # URL to create repo
     URL = "https://api.github.com/user/repos"
 
@@ -23,7 +23,7 @@ def create_repository(args):
         post["license_template"] = args.license
 
     # get authorization token
-    env = open(".env", "r")
+    env = open(project_path + "git-automate/.env", "r")
     line = env.read()
     data = line.strip().split(" ")
     if data[0] == "token:":
@@ -56,7 +56,7 @@ def create_repository(args):
 # team_id : integer, only in organization
 # auto_init : boolean, F, True to create inital commit with empty README.md
 # gitignore_template : string, https://github.com/github/gitignore for examples
-# license_template : string, https://help.github.com/en/articles/licensing-a-repository#searching-     github-by-license-type for extensions, choosealicense.com for options
+# license_template : string, https://help.github.com/en/articles/licensing-a-repository#searching-github-by-license-type for extensions, choosealicense.com for options
 # allow_squash_merge : boolean, T
 # allow_merge_commit : boolean, T
 # allow_rebase_merge : boolean, T
@@ -76,13 +76,17 @@ args = parser.parse_args()
 
 # URL to create repo
 URL = "https://api.github.com/user/repos"
+# Path to folder with github projects
+# Path to user profile on github
+# Set to whatever you want
+project_path = "/home/jonathan/Documents/github-projects/"
+git_path = "git@github.com:JonathanPartain/"
 
-# Documents folder
 # create folder with args.name
-os.system("mkdir ~/Documents/github-projects/" + args.name)
+os.system("mkdir " + project_path + args.name)
 # create repository
-create_repository(args)
+create_repository(args, project_path)
 # clone repository into folder
-clone = "git@github.com:JonathanPartain/" + args.name
-os.system("git clone " + clone + " ~/Documents/github-projects/" + args.name)
+clone = git_path + args.name
+os.system("git clone " + clone + " " + project_path + args.name)
 
