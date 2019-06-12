@@ -23,7 +23,7 @@ def create_repository(args, project_path):
         post["license_template"] = args.license
 
     # get authorization token
-    env = open(project_path + "git-automate/.env", "r")
+    env = open(project_path + "git-create/.env", "r")
     line = env.read()
     data = line.strip().split(" ")
     if data[0] == "token:":
